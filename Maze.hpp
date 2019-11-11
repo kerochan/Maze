@@ -1,22 +1,12 @@
 #pragma once
-#include<vector>
+#include "Node.hpp"
+#include "Edge.hpp"
 
-class Maze{
-    int _height, _width;
-    std::vector<int>* _maze;
+
+class IMazeModel{
 public:
-    Maze(int maze_height, int maze_width);
-    ~Maze();
-
-    int operator()(const int h, const int w) const;
-    void in(const int h, const int w, const int value);
-
-    inline int getHeight() const{
-        return _height;
-    };
-
-    inline int getWidth() const{
-        return _width;
-    };
+    virtual Node& getNode(int index) const = 0;
+    virtual Edge& getEdge(std::pair<int, int> connection) const = 0;
+    virtual ~IMazeModel();
 
 };
