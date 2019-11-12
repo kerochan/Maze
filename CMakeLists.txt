@@ -14,8 +14,6 @@ link_directories(../pdcurses/win32)
 
 add_executable(main
     main.cpp
-    Tree.cpp
-    DisjointSet.cpp
     )
 
 target_link_libraries(main pdcurses)

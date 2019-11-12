@@ -2,7 +2,6 @@
 #include "Node.hpp"
 #include "Edge.hpp"
 
-
 class IMazeModel{
 public:
     virtual Node& getNode(int index) const = 0;
