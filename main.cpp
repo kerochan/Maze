@@ -2,6 +2,7 @@
 #include "curses.h"
 #include "IStateMazeNode.hpp"
 #include "Node.hpp"
+#include"Edge.hpp"
 
 void CursesInit();
 void CursesMain();
@@ -46,6 +47,9 @@ void CursesMain(){
     node.setState(new StateWall());
     std::cout << node.getIndex() << " : " << node.getState().getNodeString() << std::endl;
     
-    
+    Edge edge = Edge(0, 2);
+    std::cout << edge.getConSrcIndex() << " , " << edge.getConDstIndex() << std::endl;
+    edge = Edge(std::make_pair(3,4));
+    std::cout << edge.getConSrcIndex() << " , " << edge.getConDstIndex() << std::endl;
 
 }

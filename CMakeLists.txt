@@ -15,6 +15,7 @@ link_directories(../pdcurses/win32)
 add_executable(main
     main.cpp
     Node.cpp
+    Edge.cpp
     IStateMazeNode.cpp
     )
 
