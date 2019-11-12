@@ -1,18 +1,20 @@
 #pragma once
+#include<string>
 
 class IStateMazeNode{
 public:
-    virtual char getChar() const noexcept = 0;
+    virtual std::string getNodeString() const noexcept = 0;
     virtual ~IStateMazeNode(){};
 };
 
 class StateWall : public IStateMazeNode{
 public:
-    char getChar() const noexcept;
+    std::string getNodeString() const noexcept;
 
 };
 
 class StatePassage : public IStateMazeNode{
 public:
-    char getChar() const noexcept;
+    std::string getNodeString() const noexcept;
+
 };

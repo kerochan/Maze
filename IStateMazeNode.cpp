@@ -1,10 +1,9 @@
 #include "IStateMazeNode.hpp"
 
-
-char StateWall::getChar() const noexcept{
-    return '@@';
+std::string StateWall::getNodeString() const noexcept{
+    return "@@";
 }
 
-char StatePassage::getChar() const noexcept{
-    return '  ';
+std::string StatePassage::getNodeString() const noexcept{
+    return "  ";
 }

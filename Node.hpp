@@ -5,5 +5,10 @@ class Node{
     int _index;
     IStateMazeNode* _state;
 public:
-    void setState(IStateMazeNode* state);
+    explicit Node(int index);
+    explicit Node(int index, IStateMazeNode* state);
+
+    void setState(IStateMazeNode* state) noexcept;
+    int getIndex() const noexcept;
+    const IStateMazeNode& getState() const noexcept;
 };
