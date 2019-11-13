@@ -53,7 +53,7 @@ public:
      * @details 範囲外のindexを渡すとout_of_range例外を送出
      */
     void ChangeNodeData(int index, IStateMazeNode* state);
-    
+
     /**
      * @brief 2つのNodeオブジェクトを接続する
      * 
@@ -63,6 +63,7 @@ public:
      */
     void Connect(int src_index, int dst_index);
 
+    
     void Disconnect(int src_index, int dst_index);
 
     ~BasicMazeModel();
