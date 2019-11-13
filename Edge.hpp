@@ -4,6 +4,7 @@
 class Edge{
     std::pair<int, int> _connection;
 public:
+    Edge();
     explicit Edge(int connection_src, int connection_dst);
     explicit Edge(std::pair<int, int> connection);
 

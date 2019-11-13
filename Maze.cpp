@@ -1,6 +1,8 @@
 #include "Maze.hpp"
 #include <stdexcept>
 
+BasicMazeModel::BasicMazeModel(){}
+
 BasicMazeModel::BasicMazeModel(size_t width, size_t height){
     _width = width;
     _height = height;
@@ -13,7 +15,7 @@ BasicMazeModel::BasicMazeModel(size_t width, size_t height, const std::vector<No
     _width = width;
     _height = height;
 
-    _nodes = new std::vector<Node>(nodes);
+    _nodes = new std::vector<Node>(_width * _height);
     for(Node node : nodes){
         int idx = node.getIndex();
         if (0 <= idx && idx < _width * _height){
@@ -24,14 +26,19 @@ BasicMazeModel::BasicMazeModel(size_t width, size_t height, const std::vector<No
 }
 
 Node& BasicMazeModel::getNode(int index) const{
-    if (0 <= index && index < _width * _height){
-        return _nodes->at(index);
-    }
-    throw std::out_of_range("範囲外のインデックスが指定されました");
+    return _nodes->at(index);
 }
 
 Edge& BasicMazeModel::getEdge(std::pair<int, int> connection) const{
-
+    for(Edge& edge : *_edges){
+        int src_idx = edge.getConSrcIndex();
+        int dst_idx = edge.getConDstIndex();
+        if((src_idx == connection.first && dst_idx == connection.second)
+            || (src_idx == connection.second && dst_idx == connection.first)){
+            return edge;
+        }
+    }
+    throw std::out_of_range("与えられたペアを持つEdgeオブジェクトが存在しません");
 }
 
 void BasicMazeModel::ChangeNodeData(int index, IStateMazeNode* state){

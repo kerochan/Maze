@@ -1,6 +1,6 @@
 #include "Edge.hpp"
 
-
+Edge::Edge(){}
 
 Edge::Edge(int connection_src, int connection_dst){
     _connection = std::make_pair(connection_src, connection_dst);

@@ -17,6 +17,7 @@ add_executable(main
     Node.cpp
     Edge.cpp
     IStateMazeNode.cpp
+    Maze.cpp
     )
 
 target_link_libraries(main pdcurses)

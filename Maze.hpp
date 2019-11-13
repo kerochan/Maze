@@ -16,22 +16,33 @@ public:
 class BasicMazeModel : public IMazeModel{
     size_t _width, _height;
 
+    //! Nodeオブジェクトを格納するvector Nodeオブジェクトのindexと_nodesのインデックスは一致
     std::vector<Node>* _nodes;
+    //! Edgeオブジェクトを格納するvector 
     std::vector<Edge>* _edges;
 
 public:
+    BasicMazeModel();
     explicit BasicMazeModel(size_t width, size_t height);
     explicit BasicMazeModel(size_t width, size_t height, const std::vector<Node>& nodes);
 
     /**
      * @brief indexで指定した値を持つNodeオブジェクトを得る
      * 
-     * @param index 得たいNodeのindex
-     * @return Node& indexに対応したNodeの参照
+     * @param index 得たいNodeオブジェクトのindex
+     * @return Node& indexに対応したNodeオブジェクトの参照
      * @details 範囲外のindexを渡すとout_of_range例外を送出
      */
     Node& getNode(int index) const;
 
+    /**
+     * @brief connectionで指定したペアを持つEdgeオブジェクトを得る
+     * 
+     * @param connection 得たいEdgeオブジェクトのpair
+     * @return Edge& connectionのペアの値に対応したEdgeオブジェクトの参照
+     * @details
+     * 
+     */
     Edge& getEdge(std::pair<int, int> connection) const;
 
     void ChangeNodeData(int index, IStateMazeNode* state);

@@ -5,6 +5,7 @@ class Node{
     int _index;
     IStateMazeNode* _state;
 public:
+    Node();
     explicit Node(int index);
     explicit Node(int index, IStateMazeNode* state);
 

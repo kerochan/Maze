@@ -1,5 +1,7 @@
 #include"Node.hpp"
 
+Node::Node(){}
+
 Node::Node(int index){
     _index = index;
 }
