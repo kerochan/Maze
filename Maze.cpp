@@ -1,4 +1,5 @@
 #include "Maze.hpp"
+#include <algorithm>
 #include <stdexcept>
 
 BasicMazeModel::BasicMazeModel(){}
@@ -42,15 +43,28 @@ Edge& BasicMazeModel::getEdge(std::pair<int, int> connection) const{
 }
 
 void BasicMazeModel::ChangeNodeData(int index, IStateMazeNode* state){
-
+    (*_nodes)[index].setState(state);
 }
 
 void BasicMazeModel::Connect(int src_index, int dst_index){
-
+    Edge edge;
+    if((0 <= src_index && src_index < _width * _height)
+     && (0 <= dst_index && dst_index < _width * _height)){
+        edge = Edge(src_index, dst_index);
+        _edges->push_back(edge);
+        return;
+    }
+    throw std::out_of_range("—^‚¦‚ç‚ê‚½index‚ª”ÍˆÍŠO‚Å‚·");
+  
 }
 
 void BasicMazeModel::Disconnect(int src_index, int dst_index){
-
+    Edge edge = Edge(src_index, dst_index);
+    if(_edges->erase(std::remove_if(_edges->begin(), _edges->end(),
+        [&edge](Edge& e){return (e.getConSrcIndex() == edge.getConSrcIndex() && e.getConDstIndex() == edge.getConDstIndex())
+         || (e.getConSrcIndex() == edge.getConDstIndex() && e.getConDstIndex() == edge.getConSrcIndex());})) == _edges->end()){
+        throw std::out_of_range("—^‚¦‚ç‚ê‚½index‚ª”ÍˆÍŠO‚Å‚·");
+    }
 }
 
 

@@ -45,8 +45,24 @@ public:
      */
     Edge& getEdge(std::pair<int, int> connection) const;
 
+    /**
+     * @brief Nodeオブジェクトのstateを変更する
+     * 
+     * @param index 変更対象のNodeオブジェクトのindex
+     * @param state IStateMazeNodeのオブジェクト
+     * @details 範囲外のindexを渡すとout_of_range例外を送出
+     */
     void ChangeNodeData(int index, IStateMazeNode* state);
+    
+    /**
+     * @brief 2つのNodeオブジェクトを接続する
+     * 
+     * @param src_index 接続元のNodeオブジェクトのindex
+     * @param dst_index 接続先のNodeオブジェクトのindex
+     * @details 範囲外のindexを渡すとout_of_range例外を送出
+     */
     void Connect(int src_index, int dst_index);
+
     void Disconnect(int src_index, int dst_index);
 
     ~BasicMazeModel();
