@@ -12,7 +12,7 @@ public:
     virtual ~IMazeModel(){};
 };
 
-//長方形の迷路
+
 class BasicMazeModel : public IMazeModel{
     size_t _width, _height;
 
@@ -23,7 +23,15 @@ public:
     explicit BasicMazeModel(size_t width, size_t height);
     explicit BasicMazeModel(size_t width, size_t height, const std::vector<Node>& nodes);
 
+    /**
+     * @brief indexで指定した値を持つNodeオブジェクトを得る
+     * 
+     * @param index 得たいNodeのindex
+     * @return Node& indexに対応したNodeの参照
+     * @details 範囲外のindexを渡すとout_of_range例外を送出
+     */
     Node& getNode(int index) const;
+
     Edge& getEdge(std::pair<int, int> connection) const;
 
     void ChangeNodeData(int index, IStateMazeNode* state);
