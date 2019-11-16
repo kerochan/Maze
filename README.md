@@ -1,2 +1,2 @@
-# PDCurseProj
-PDCursesを用いたプログラム置き場
+# Maze
+迷路作製プログラム
