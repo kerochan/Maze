@@ -1,7 +1,6 @@
 #include "MazeCreatorFactory.hpp"
 
-
-IMazeCreatorFactory* BasicMazeCreatorFactory::create() const noexcept{
-    return nullptr;
-};
+IMazeCreator* BasicMazeCreatorFactory::Create() const noexcept{
+    return new StickDown();
+}
 

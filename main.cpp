@@ -1,17 +1,18 @@
 #include<iostream>
-#include "curses.h"
+//#include "curses.h"
 #include "IStateMazeNode.hpp"
 #include "Node.hpp"
 #include"Edge.hpp"
 #include"Maze.hpp"
+#include"MazeCreatorFactory.hpp"
 
 void CursesInit();
 void CursesMain();
 void CursesTerminate();
 
-int main(){
 
-    CursesInit();
+int main(){
+ CursesInit();
 
     CursesMain();
 
@@ -20,21 +21,21 @@ int main(){
     return 0;
 }
 
-//pdcurses‚Ì‰Šú‰»?????
+
 void CursesInit(){
-    initscr();
+    //initscr();
 
-    nodelay(stdscr, TRUE);
-    noecho();
+    //nodelay(stdscr, TRUE);
+    //noecho();
 }
 
-//pdcurses‚ÌI??ˆ??
+
 void CursesTerminate(){
-    endwin();
+    //endwin();
 }
 
 
-//ƒƒCƒ“‚Ìˆ??
+
 void CursesMain(){
     IStateMazeNode* state;
     state = new StateWall();
@@ -82,4 +83,7 @@ void CursesMain(){
     }
     //maze->Disconnect(20,20);
 
+
+    IMazeCreatorFactory* factory = new BasicMazeCreatorFactory();
+    StickDown* creator = static_cast<StickDown*>(factory->Create());
 }
