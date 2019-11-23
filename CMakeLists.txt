@@ -20,6 +20,7 @@ add_executable(main
     Maze.cpp
     MazeCreator.cpp
     MazeCreatorFactory.cpp
+    IDirection.cpp
     )
 
 target_link_libraries(main pdcurses)

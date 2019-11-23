@@ -39,7 +39,7 @@ Edge& BasicMazeModel::getEdge(std::pair<int, int> connection) const{
             return edge;
         }
     }
-    throw std::out_of_range("—^‚¦‚ç‚ê‚½ƒyƒA‚ðŽ‚ÂEdgeƒIƒuƒWƒFƒNƒg‚ª‘¶Ý‚µ‚Ü‚¹‚ñ");
+    throw std::out_of_range("ï¿½^ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½yï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Edgeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
 }
 
 void BasicMazeModel::ChangeNodeData(int index, IStateMazeNode* state){
@@ -54,7 +54,7 @@ void BasicMazeModel::Connect(int src_index, int dst_index){
         _edges->push_back(edge);
         return;
     }
-    throw std::out_of_range("—^‚¦‚ç‚ê‚½index‚ª”ÍˆÍŠO‚Å‚·");
+    throw std::out_of_range("ï¿½^ï¿½ï¿½ï¿½ï¿½ê‚½indexï¿½ï¿½ï¿½ÍˆÍŠOï¿½Å‚ï¿½");
   
 }
 
@@ -63,10 +63,9 @@ void BasicMazeModel::Disconnect(int src_index, int dst_index){
     if(_edges->erase(std::remove_if(_edges->begin(), _edges->end(),
         [&edge](Edge& e){return (e.getConSrcIndex() == edge.getConSrcIndex() && e.getConDstIndex() == edge.getConDstIndex())
          || (e.getConSrcIndex() == edge.getConDstIndex() && e.getConDstIndex() == edge.getConSrcIndex());})) == _edges->end()){
-        throw std::out_of_range("—^‚¦‚ç‚ê‚½index‚ª”ÍˆÍŠO‚Å‚·");
+        throw std::out_of_range("ï¿½^ï¿½ï¿½ï¿½ï¿½ê‚½indexï¿½ï¿½ï¿½ÍˆÍŠOï¿½Å‚ï¿½");
     }
 }
-
 
 BasicMazeModel::~BasicMazeModel(){
     delete(_nodes);

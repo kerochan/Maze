@@ -5,6 +5,7 @@
 #include"Edge.hpp"
 #include"Maze.hpp"
 #include"MazeCreatorFactory.hpp"
+#include "IDirection.hpp"
 
 void CursesInit();
 void CursesMain();
@@ -84,6 +85,17 @@ void CursesMain(){
     //maze->Disconnect(20,20);
 
 
-    IMazeCreatorFactory* factory = new BasicMazeCreatorFactory();
+    IMazeCreatorFactory* factory = new BasicMazeCreatorFactory(7, 5);
     StickDown* creator = static_cast<StickDown*>(factory->Create());
+
+    IMazeCreatorFactory* factory_failed = new BasicMazeCreatorFactory(6, 9);
+    try{
+        factory_failed->Create();
+    }catch(std::domain_error& e){
+        std::cout << e.what() << std::endl;
+    }
+
+    IDirection* dire = new North();
+    std::cout << dire->getDirectionValue() << " : " << "(" << dire->getMovement().first <<  "," << dire->getMovement().second << ")" << std::endl;
+    
 }
