@@ -6,6 +6,7 @@
 #include"Maze.hpp"
 #include"MazeCreatorFactory.hpp"
 #include "IDirection.hpp"
+#include "RandomDirectionSelector.hpp"
 
 void CursesInit();
 void CursesMain();
@@ -97,5 +98,34 @@ void CursesMain(){
 
     IDirection* dire = new North();
     std::cout << dire->getDirectionValue() << " : " << "(" << dire->getMovement().first <<  "," << dire->getMovement().second << ")" << std::endl;
+    
+
+    North* north = new North();
+    South* south = new South();
+    West* west = new West();
+    East* east = new East();
+
+    RandomDirectionSelector selector;
+    selector.Push(north);
+    selector.Push(south);
+    selector.Push(east);
+    selector.Push(west);
+    try{
+        selector.Invalid(1);
+        selector.Invalid(2);
+        selector.Invalid(3);
+        selector.Invalid(0);
+
+        selector.Valid(0);
+
+        for(int loop = 0; loop < 10; loop++){
+            IDirection* direction = selector.getDirection();
+            std::cout << direction->getDirectionName() << std::endl;
+        }
+        
+    }catch(std::exception& e){
+        std::cerr << e.what() << std::endl;
+    }
+    
     
 }

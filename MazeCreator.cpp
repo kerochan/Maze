@@ -37,9 +37,9 @@ IMazeCreator* StickDown::Create() const{
         for(int w = 1; w < _width; w += 2){
             //最初の列に関しては上方向に棒を倒せる
             if(h == 1){
-                dist(engine);
+                
             }else{
-
+                
             }
         }
     }
