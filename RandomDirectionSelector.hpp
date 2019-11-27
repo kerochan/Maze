@@ -23,5 +23,6 @@ public:
     void Push(IDirection* dire) noexcept;
     void Valid(int index);
     void Invalid(int index);
+    bool isAllInvalid() const noexcept;
     IDirection* getDirection() const;
 };

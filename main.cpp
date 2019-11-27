@@ -89,6 +89,8 @@ void CursesMain(){
     IMazeCreatorFactory* factory = new BasicMazeCreatorFactory(7, 5);
     StickDown* creator = static_cast<StickDown*>(factory->Create());
 
+    
+
     IMazeCreatorFactory* factory_failed = new BasicMazeCreatorFactory(6, 9);
     try{
         factory_failed->Create();
@@ -126,6 +128,8 @@ void CursesMain(){
     }catch(std::exception& e){
         std::cerr << e.what() << std::endl;
     }
-    
-    
+    IMazeCreatorFactory* f = new BasicMazeCreatorFactory(25, 21);
+    StickDown* c = static_cast<StickDown*>(f->Create());
+    c->Create();
+
 }

@@ -4,6 +4,9 @@
 #include <random>
 #include "Maze.hpp"
 #include "IDirection.hpp"
+#include "RandomDirectionSelector.hpp"
+
+#include <iostream>
 
 StickDown::StickDown(){}
 
@@ -27,24 +30,51 @@ IMazeCreator* StickDown::Create() const{
         }
     }
 
-    std::random_device seed_gen;
-    std::mt19937 engine(seed_gen());
+    RandomDirectionSelector direction_selector;
+    direction_selector.Push(new North());
+    direction_selector.Push(new East());
+    direction_selector.Push(new South());
+    direction_selector.Push(new West());
+   
 
-    //東西南北のどれかを表す
-    std::uniform_int_distribution dist(0, 3);
 
     for(int h = 1; h < _height;h += 2){
         for(int w = 1; w < _width; w += 2){
-            //最初の列に関しては上方向に棒を倒せる
-            if(h == 1){
-                
-            }else{
-                
+            if(w != 1){
+                direction_selector.Invalid(0);
             }
+            if(maze[h - 1][w]->getNodeString() == maze[h][w]->getNodeString()){
+                direction_selector.Invalid(0);
+            }
+            if(maze[h][w + 1]->getNodeString() == maze[h][w]->getNodeString()){
+                direction_selector.Invalid(1);
+            }
+            if(maze[h + 1][w]->getNodeString() == maze[h][w]->getNodeString()){
+                direction_selector.Invalid(2);
+            }
+            if(maze[h][w - 1]->getNodeString() == maze[h][w]->getNodeString()){
+                direction_selector.Invalid(3);
+            }
+            
+            if(!direction_selector.isAllInvalid()){
+                IDirection* direction = direction_selector.getDirection();
+                maze[h + direction->getMovement().first][w + direction->getMovement().second] = new StateWall();
+                std::cout << h << "," << w << ":" << direction->getDirectionName() << std::endl;;
+            }
+            for(int d = 0; d < 4; d++) direction_selector.Valid(d);
         }
+    }
+
+    for(int h = 0; h < _height; h++){
+        for(int w = 0;w < _width; w++){
+            std::cout << maze[h][w]->getNodeString();
+        }
+        std::cout << std::endl;
     }
 
     std::vector<Node> nodes(_width * _height);
     
     BasicMazeModel maze_model = BasicMazeModel(_height, _width);
+
+    return nullptr;
 }

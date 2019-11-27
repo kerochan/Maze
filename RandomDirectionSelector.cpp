@@ -27,8 +27,12 @@ void RandomDirectionSelector::Invalid(int index){
     }
 }
 
+bool RandomDirectionSelector::isAllInvalid() const noexcept{
+    return _valid_length == 0 ? true : false ;
+}
+
 IDirection* RandomDirectionSelector::getDirection() const{
-    if(_valid_length == 0) throw std::out_of_range("有効な要素が存在しません");
+    if(isAllInvalid()) throw std::out_of_range("有効な要素が存在しません");
     std::uniform_int_distribution<> dist(0, _valid_length - 1);
     std::mt19937 engine(static_cast<int>(clock()));
     int random_value = dist(engine);

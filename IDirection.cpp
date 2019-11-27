@@ -9,7 +9,7 @@ std::string North::getDirectionName() const noexcept{
 }
 
 std::pair<int ,int> North::getMovement() const noexcept{
-    return std::pair<int, int>(0, -1);
+    return std::pair<int, int>(-1, 0);
 }
 
 
@@ -18,11 +18,11 @@ int South::getDirectionValue() const noexcept{
 }
 
 std::string South::getDirectionName() const noexcept{
-    return "East";
+    return "South";
 }
 
 std::pair<int ,int> South::getMovement() const noexcept{
-    return std::pair<int, int>(0, 1);
+    return std::pair<int, int>(1, 0);
 }
 
 int West::getDirectionValue() const noexcept{
@@ -34,7 +34,7 @@ std::string West::getDirectionName() const noexcept{
 }
 
 std::pair<int ,int> West::getMovement() const noexcept{
-    return std::pair<int, int>(-1, 0);
+    return std::pair<int, int>(0, -1);
 }
 
 int East::getDirectionValue() const noexcept{
@@ -46,5 +46,5 @@ std::string East::getDirectionName() const noexcept{
 }
 
 std::pair<int ,int> East::getMovement() const noexcept{
-    return std::pair<int, int>(1, 0);
+    return std::pair<int, int>(0, 1);
 }
