@@ -37,10 +37,10 @@ IMazeCreator* StickDown::Create() const{
     direction_selector.Push(new West());
    
 
-
+    std::vector<std::string> strvec;
     for(int h = 1; h < _height;h += 2){
         for(int w = 1; w < _width; w += 2){
-            if(w != 1){
+            if(h != 1){
                 direction_selector.Invalid(0);
             }
             if(maze[h - 1][w]->getNodeString() == maze[h][w]->getNodeString()){
@@ -59,18 +59,73 @@ IMazeCreator* StickDown::Create() const{
             if(!direction_selector.isAllInvalid()){
                 IDirection* direction = direction_selector.getDirection();
                 maze[h + direction->getMovement().first][w + direction->getMovement().second] = new StateWall();
-                std::cout << h << "," << w << ":" << direction->getDirectionName() << std::endl;;
+                strvec.push_back(direction->getDirectionName());
+                //std::cout << std::endl;
+                //std::cout << h << "," << w << ":" << direction->getDirectionName() << std::endl;
+                //std::cout << direction->getDirectionName() ;
+
             }
             for(int d = 0; d < 4; d++) direction_selector.Valid(d);
         }
     }
+    
+    std::vector<std::vector<IStateMazeNode*>> maze_withwall(_height + 2);
+    for(int h = 0; h < _height + 2; h++){
+        maze_withwall[h] = std::vector<IStateMazeNode*>(_width + 2);
+        for(int w = 0;w < _width + 2; w++){
+            if(h == 0 || h == _height + 1 || w == 0 || w == _width + 1){
+                maze_withwall[h][w] = new StateWall();
+            }else{
+                maze_withwall[h][w] = maze[h - 1][w - 1];
+            }
+        }
+    }
 
-    for(int h = 0; h < _height; h++){
-        for(int w = 0;w < _width; w++){
-            std::cout << maze[h][w]->getNodeString();
+    auto passstr = StatePassage().getNodeString();
+    int linenum = 0;
+    //直線かどうか判定
+    for(int h = 1; h < _height + 1; h++){
+        for(int w = 1;w < _width + 1; w++){
+            if((maze_withwall[h - 1][w]->getNodeString() == maze_withwall[h][w]->getNodeString() &&
+             maze_withwall[h][w]->getNodeString() == maze_withwall[h + 1][w]->getNodeString() &&
+             maze_withwall[h][w]->getNodeString() == passstr) || 
+             ((maze_withwall[h][w - 1]->getNodeString() == maze_withwall[h][w]->getNodeString() &&
+             maze_withwall[h][w]->getNodeString() == maze_withwall[h][w + 1]->getNodeString() &&
+             maze_withwall[h][w]->getNodeString() == passstr))){
+                 linenum++;
+             }
+        }
+    }
+
+    auto wallstr = StateWall().getNodeString();
+    int crossnum = 0;
+    //分岐判定
+    for(int h = 1; h < _height + 1; h++){
+        for(int w = 1;w < _width + 1; w++){
+            if(maze_withwall[h][w]->getNodeString() == passstr){
+                 if((maze_withwall[h - 1][w]->getNodeString() == passstr) &&
+                    (maze_withwall[h + 1][w]->getNodeString() == passstr) &&
+                    (maze_withwall[h][w - 1]->getNodeString() == passstr) &&
+                    (maze_withwall[h][w + 1]->getNodeString() == passstr)){
+                    crossnum++;
+                }
+            }
+            
+        }
+    }
+
+    std::cout << "LinePlaceRate : " << static_cast<double>(linenum) / (_width * _height) << std::endl;
+    std::cout << "CrossPlaceRate : " << static_cast<double>(crossnum) / (_width * _height) << std::endl;  
+    
+    for(int h = 0; h < _height + 2; h++){
+        for(int w = 0;w < _width + 2; w++){
+            std::cout << maze_withwall[h][w]->getNodeString();
         }
         std::cout << std::endl;
     }
+
+    //for(auto a : strvec) std::cout << a << std::endl;
+    
 
     std::vector<Node> nodes(_width * _height);
     
