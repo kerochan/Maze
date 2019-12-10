@@ -16,9 +16,9 @@ public:
 class BasicMazeModel : public IMazeModel{
     size_t _width, _height;
 
-    //! NodeƒIƒuƒWƒFƒNƒg‚ğŠi”[‚·‚évector NodeƒIƒuƒWƒFƒNƒg‚Ìindex‚Æ_nodes‚ÌƒCƒ“ƒfƒbƒNƒX‚Íˆê’v
+    //! Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½ï¿½vector Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½indexï¿½ï¿½_nodesï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½Íˆï¿½v
     std::vector<Node>* _nodes;
-    //! EdgeƒIƒuƒWƒFƒNƒg‚ğŠi”[‚·‚évector 
+    //! Edgeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½ï¿½vector 
     std::vector<Edge>* _edges;
 
 public:
@@ -27,44 +27,68 @@ public:
     explicit BasicMazeModel(size_t width, size_t height, const std::vector<Node>& nodes);
 
     /**
-     * @brief index‚Åw’è‚µ‚½’l‚ğ‚ÂNodeƒIƒuƒWƒFƒNƒg‚ğ“¾‚é
+     * @brief indexï¿½Åwï¿½è‚µï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ğ“¾‚ï¿½
      * 
-     * @param index “¾‚½‚¢NodeƒIƒuƒWƒFƒNƒg‚Ìindex
-     * @return Node& index‚É‘Î‰‚µ‚½NodeƒIƒuƒWƒFƒNƒg‚ÌQÆ
-     * @details ”ÍˆÍŠO‚Ìindex‚ğ“n‚·‚Æout_of_range—áŠO‚ğ‘—o
+     * @param index ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½index
+     * @return Node& indexï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ÌQï¿½ï¿½
+     * @details ï¿½ÍˆÍŠOï¿½ï¿½indexï¿½ï¿½nï¿½ï¿½ï¿½ï¿½out_of_rangeï¿½ï¿½Oï¿½ğ‘—o
      */
     Node& getNode(int index) const;
 
     /**
-     * @brief connection‚Åw’è‚µ‚½ƒyƒA‚ğ‚ÂEdgeƒIƒuƒWƒFƒNƒg‚ğ“¾‚é
+     * @brief connectionï¿½Åwï¿½è‚µï¿½ï¿½ï¿½yï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Edgeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ğ“¾‚ï¿½
      * 
-     * @param connection “¾‚½‚¢EdgeƒIƒuƒWƒFƒNƒg‚Ìpair
-     * @return Edge& connection‚ÌƒyƒA‚Ì’l‚É‘Î‰‚µ‚½EdgeƒIƒuƒWƒFƒNƒg‚ÌQÆ
+     * @param connection ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Edgeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½pair
+     * @return Edge& connectionï¿½Ìƒyï¿½Aï¿½Ì’lï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½Edgeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ÌQï¿½ï¿½
      * @details
      * 
      */
     Edge& getEdge(std::pair<int, int> connection) const;
 
     /**
-     * @brief NodeƒIƒuƒWƒFƒNƒg‚Ìstate‚ğ•ÏX‚·‚é
+     * @brief Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½stateï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
      * 
-     * @param index •ÏX‘ÎÛ‚ÌNodeƒIƒuƒWƒFƒNƒg‚Ìindex
-     * @param state IStateMazeNode‚ÌƒIƒuƒWƒFƒNƒg
-     * @details ”ÍˆÍŠO‚Ìindex‚ğ“n‚·‚Æout_of_range—áŠO‚ğ‘—o
+     * @param index ï¿½ÏXï¿½ÎÛ‚ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½index
+     * @param state IStateMazeNodeï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½g
+     * @details ï¿½ÍˆÍŠOï¿½ï¿½indexï¿½ï¿½nï¿½ï¿½ï¿½ï¿½out_of_rangeï¿½ï¿½Oï¿½ğ‘—o
      */
     void ChangeNodeData(int index, IStateMazeNode* state);
 
     /**
-     * @brief 2‚Â‚ÌNodeƒIƒuƒWƒFƒNƒg‚ğÚ‘±‚·‚é
+     * @brief 2ï¿½Â‚ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ï¿½
      * 
-     * @param src_index Ú‘±Œ³‚ÌNodeƒIƒuƒWƒFƒNƒg‚Ìindex
-     * @param dst_index Ú‘±æ‚ÌNodeƒIƒuƒWƒFƒNƒg‚Ìindex
-     * @details ”ÍˆÍŠO‚Ìindex‚ğ“n‚·‚Æout_of_range—áŠO‚ğ‘—o
+     * @param src_index ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½index
+     * @param dst_index ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½Nodeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½index
+     * @details ï¿½ÍˆÍŠOï¿½ï¿½indexï¿½ï¿½nï¿½ï¿½ï¿½ï¿½out_of_rangeï¿½ï¿½Oï¿½ğ‘—o
      */
     void Connect(int src_index, int dst_index);
 
-    
     void Disconnect(int src_index, int dst_index);
 
     ~BasicMazeModel();
+};
+
+class GridMazeModel : public IMazeModel{
+    size_t _width, _height;
+
+    std::vector<std::vector<Node>>* _node;
+    std::vector<std::vector<Edge>>* _edge;
+public:
+    GridMazeModel();
+    explicit GridMazeModel(size_t height, size_t width);
+    explicit GridMazeModel(size_t height, size_t width, const std::vector<std::vector<Node>>& nodes);  
+
+    Node& getNode(int index) const;
+    Node& getNode(int width, int height) const;
+
+    Edge& getEdge(std::pair<int, int> connection) const;
+    Edge& getEdge(std::pair<int, int> node1, std::pair<int, int> node2) const;
+
+   
+    void Connect(int src_index, int dst_index);
+    void Disconnect(int src_index, int dst_index);
+    ~GridMazeModel();
+private:
+    bool isConnected(std::pair<int, int> connection) const;
+    bool isConnected(std::pair<int, int> node1, std::pair<int, int> node2) const;
 };

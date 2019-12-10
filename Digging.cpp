@@ -6,17 +6,18 @@
 #include "IDirection.hpp"
 #include "RandomDirectionSelector.hpp"
 #include <iostream>
+#include <cstdlib>
 
-StickDown::StickDown(){}
+Digging::Digging(){}
 
-StickDown::StickDown(size_t height, size_t width){
+Digging::Digging(size_t height, size_t width){
     if(height % 2 == 0 || width % 2 == 0)
         throw std::domain_error("迷路の幅および高さが奇数ではありません");
     _height = height;
     _width = width;
 }
 
-IMazeCreator* StickDown::Create() const{
+IMazeCreator* Digging::Create() const{
 
     //二次元配列を用いて迷路をモデル化
     std::vector<std::vector<IStateMazeNode*>> maze(_height);
@@ -59,10 +60,6 @@ IMazeCreator* StickDown::Create() const{
                 IDirection* direction = direction_selector.getDirection();
                 maze[h + direction->getMovement().first][w + direction->getMovement().second] = new StateWall();
                 strvec.push_back(direction->getDirectionName());
-                //std::cout << std::endl;
-                //std::cout << h << "," << w << ":" << direction->getDirectionName() << std::endl;
-                //std::cout << direction->getDirectionName() ;
-
             }
             for(int d = 0; d < 4; d++) direction_selector.Valid(d);
         }
@@ -112,28 +109,24 @@ IMazeCreator* StickDown::Create() const{
             
         }
     }
-
     double lineplacerate = static_cast<double>(linenum) / (_width * _height);
     double crossplacerate = static_cast<double>(crossnum) / (_width * _height);
-
-    std::cout << "LinePlaceRate : " << lineplacerate << std::endl;
-    std::cout << "CrossPlaceRate : " << crossplacerate << std::endl;  
+    std::cout << "LinePlaceRate : " << static_cast<double>(linenum) / (_width * _height) << std::endl;
+    std::cout << "CrossPlaceRate : " << static_cast<double>(crossnum) / (_width * _height) << std::endl;  
     
+    /*
+    for(int h = 0; h < _height + 2; h++){
+        for(int w = 0;w < _width + 2; w++){
+            std::cout << maze_withwall[h][w]->getNodeString();
+        }
+        std::cout << std::endl;
+    }
+
+    */
     FILE* fp;
     fp = fopen("digging.csv", "a");
     fprintf(fp, "%f,%f\n",lineplacerate, crossplacerate);
     fclose(fp);
-
-    fp = fopen("digging_maze.txt", "a");
-    for(int h = 0; h < _height + 2; h++){
-        for(int w = 0;w < _width + 2; w++){
-            fprintf(fp, "%s", maze_withwall[h][w]->getNodeString().c_str());
-        }
-        fprintf(fp, "\n");
-    }
-
-     
-
 
     std::vector<Node> nodes(_width * _height);
     

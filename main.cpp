@@ -39,9 +39,9 @@ void CursesTerminate(){
 
 
 void CursesMain(){
-    for(int i = 13; i < 14; i += 2){
-        IMazeCreatorFactory* f = new BasicMazeCreatorFactory(i*2 + 3, i);
-        StickDown* c = static_cast<StickDown*>(f->Create());
+    IMazeCreatorFactory* f = new BasicMazeCreatorFactory(99, 99);
+    StickDown* c = static_cast<StickDown*>(f->Create());
+    for(int i = 0; i < 100; i++){
         c->Create();
     }
     
