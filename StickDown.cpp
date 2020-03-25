@@ -1,23 +1,22 @@
 
-#include "Digging.hpp"
+#include "StickDown.hpp"
 #include <stdexcept>
 #include <random>
-#include "BasicMazeModel.hpp"
 #include "IDirection.hpp"
 #include "RandomDirectionSelector.hpp"
+#include "GridMazeModel.hpp"
 #include <iostream>
-#include <cstdlib>
 
-Digging::Digging(){}
+StickDown::StickDown(){}
 
-Digging::Digging(size_t height, size_t width){
+StickDown::StickDown(size_t height, size_t width){
     if(height % 2 == 0 || width % 2 == 0)
         throw std::domain_error("迷路の幅および高さが奇数ではありません");
     _height = height;
     _width = width;
 }
 
-IMazeModel* Digging::Create() const{
+IMazeModel* StickDown::Create() const{
 
     //二次元配列を用いて迷路をモデル化
     std::vector<std::vector<IStateMazeNode*>> maze(_height);
@@ -63,7 +62,7 @@ IMazeModel* Digging::Create() const{
             for(int d = 0; d < 4; d++) direction_selector.Valid(d);
         }
     }
-    
+
     std::vector<std::vector<IStateMazeNode*>> maze_withwall(_height + 2);
     for(int h = 0; h < _height + 2; h++){
         maze_withwall[h] = std::vector<IStateMazeNode*>(_width + 2);
@@ -76,61 +75,16 @@ IMazeModel* Digging::Create() const{
         }
     }
 
-    auto passstr = StatePassage().getNodeString();
-    int linenum = 0;
-    //直線かどうか判定
-    for(int h = 1; h < _height + 1; h++){
-        for(int w = 1;w < _width + 1; w++){
-            if((maze_withwall[h - 1][w]->getNodeString() == maze_withwall[h][w]->getNodeString() &&
-             maze_withwall[h][w]->getNodeString() == maze_withwall[h + 1][w]->getNodeString() &&
-             maze_withwall[h][w]->getNodeString() == passstr) || 
-             ((maze_withwall[h][w - 1]->getNodeString() == maze_withwall[h][w]->getNodeString() &&
-             maze_withwall[h][w]->getNodeString() == maze_withwall[h][w + 1]->getNodeString() &&
-             maze_withwall[h][w]->getNodeString() == passstr))){
-                 linenum++;
-             }
-        }
-    }
 
-    auto wallstr = StateWall().getNodeString();
-    int crossnum = 0;
-    //分岐判定
-    for(int h = 1; h < _height + 1; h++){
-        for(int w = 1;w < _width + 1; w++){
-            if(maze_withwall[h][w]->getNodeString() == passstr){
-                 if((maze_withwall[h - 1][w]->getNodeString() == passstr) &&
-                    (maze_withwall[h + 1][w]->getNodeString() == passstr) &&
-                    (maze_withwall[h][w - 1]->getNodeString() == passstr) &&
-                    (maze_withwall[h][w + 1]->getNodeString() == passstr)){
-                    crossnum++;
-                }
-            }
-            
-        }
-    }
-    double lineplacerate = static_cast<double>(linenum) / (_width * _height);
-    double crossplacerate = static_cast<double>(crossnum) / (_width * _height);
-    std::cout << "LinePlaceRate : " << static_cast<double>(linenum) / (_width * _height) << std::endl;
-    std::cout << "CrossPlaceRate : " << static_cast<double>(crossnum) / (_width * _height) << std::endl;  
     
-    /*
+    std::vector<std::vector<Node>> nodes_withwall(_height + 2);
     for(int h = 0; h < _height + 2; h++){
-        for(int w = 0;w < _width + 2; w++){
-            std::cout << maze_withwall[h][w]->getNodeString();
-        }
-        std::cout << std::endl;
+        nodes_withwall[h] = std::vector<Node>(_width + 2);
+        for(int w = 0; w < _width + 2; w++){
+            nodes_withwall[h][w] = Node(w + h * _width, maze_withwall[h][w]);
+        } 
     }
-
-    */
-    FILE* fp;
-    fp = fopen("digging.csv", "a");
-    fprintf(fp, "%f,%f\n",lineplacerate, crossplacerate);
-    fclose(fp);
-
-    std::vector<Node> nodes(_width * _height);
     
-    BasicMazeModel maze_model = BasicMazeModel(_height, _width);
-
-    return nullptr;
+    GridMazeModel* model = new GridMazeModel(_height + 2, _width + 2, nodes_withwall);
+    return model;
 }
-

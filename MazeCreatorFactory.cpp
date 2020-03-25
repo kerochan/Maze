@@ -1,4 +1,5 @@
 #include "MazeCreatorFactory.hpp"
+#include "StickDown.hpp"
 
 BasicMazeCreatorFactory::BasicMazeCreatorFactory(size_t height, size_t width){
     _height = height;

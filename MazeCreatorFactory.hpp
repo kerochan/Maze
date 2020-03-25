@@ -1,6 +1,5 @@
 #pragma once
-#include"Maze.hpp"
-#include"MazeCreator.hpp"
+#include"IMazeCreator.hpp"
 
 class IMazeCreatorFactory{
 public:
