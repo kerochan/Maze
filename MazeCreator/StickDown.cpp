@@ -2,10 +2,11 @@
 #include "StickDown.hpp"
 #include <stdexcept>
 #include <random>
-#include "IDirection.hpp"
+#include "Direction.hpp"
 #include "RandomDirectionSelector.hpp"
 #include "GridMazeModel.hpp"
 #include <iostream>
+
 
 StickDown::StickDown(){}
 
@@ -34,32 +35,49 @@ IMazeModel* StickDown::Create() const{
     direction_selector.Push(new East());
     direction_selector.Push(new South());
     direction_selector.Push(new West());
+
+    int choosed_directions = Direction::EnumDirection::East | Direction::EnumDirection::West | Direction::EnumDirection::South | Direction::EnumDirection::North;
    
     std::vector<std::string> strvec;
     for(int h = 1; h < _height;h += 2){
         for(int w = 1; w < _width; w += 2){
             if(h != 1){
-                direction_selector.Invalid(0);
+                choosed_directions -= Direction::EnumDirection::North;
             }
-            if(maze[h - 1][w]->getNodeString() == maze[h][w]->getNodeString()){
-                direction_selector.Invalid(0);
+            if(maze[h - 1][w] == maze[h][w]){
+                choosed_directions -= Direction::EnumDirection::North;
             }
-            if(maze[h][w + 1]->getNodeString() == maze[h][w]->getNodeString()){
-                direction_selector.Invalid(1);
+            if(maze[h][w + 1] == maze[h][w]){
+                choosed_directions -= Direction::EnumDirection::East;
             }
-            if(maze[h + 1][w]->getNodeString() == maze[h][w]->getNodeString()){
-                direction_selector.Invalid(2);
+            if(maze[h + 1][w] == maze[h][w]){
+                choosed_directions -= Direction::EnumDirection::South;
             }
-            if(maze[h][w - 1]->getNodeString() == maze[h][w]->getNodeString()){
-                direction_selector.Invalid(3);
+            if(maze[h][w - 1] == maze[h][w]){
+                choosed_directions -= Direction::EnumDirection::West;
             }
             
-            if(!direction_selector.isAllInvalid()){
-                IDirection* direction = direction_selector.getDirection();
-                maze[h + direction->getMovement().first][w + direction->getMovement().second] = new StateWall();
-                strvec.push_back(direction->getDirectionName());
+            if(choosed_directions != 0){
+                auto direction = Direction::GetDirectionAtRandom(static_cast<Direction::EnumDirection>(choosed_directions));
+                std::pair<int, int> movement = std::make_pair(0, 0);
+                switch(direction){
+                    case Direction::EnumDirection::East:
+                        movement.second= -1;
+                        break;
+                    case Direction::EnumDirection::West:
+                        movement.second = 1;
+                        break;
+                    case Direction::EnumDirection::South:
+                        movement.first = 1;
+                        break;
+                    case Direction::EnumDirection::North:
+                        movement.first = -1;
+                        break;
+                }
+                maze[h + movement.first][w + movement.second] = new StateWall();
+                
             }
-            for(int d = 0; d < 4; d++) direction_selector.Valid(d);
+
         }
     }
 
